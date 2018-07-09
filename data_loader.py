@@ -4,6 +4,10 @@ import torch
 import torch.utils.data as data
 from vocabulary import Vocabulary
 from PIL import Image
+#for OSError: image file is truncated (7 bytes not processed)
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 from pycocotools.coco import COCO
 import numpy as np
 from tqdm import tqdm
@@ -19,7 +23,7 @@ def get_loader(transform,
                end_word="<end>",
                unk_word="<unk>",
                vocab_from_file=True,
-               num_workers=0,
+               num_workers=4,#0
                cocoapi_loc='/opt'):
     """Returns the data loader.
     Args:
